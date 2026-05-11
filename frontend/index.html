@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pronunciation Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Pronunciation Analyzer</h1>
+      <p class="intro">
+        Create a user, optionally generate a self-introduction from a PIQ-style form, then practice pronunciation and track progress over time.
+      </p>
+
+      <div class="section">
+        <h2>Users</h2>
+        <label for="userNameInput">Add User Name</label>
+        <div class="button-row">
+          <input id="userNameInput" class="text-input" type="text" placeholder="Type a name like Aisha" />
+          <button id="addUserButton" type="button">Add User</button>
+        </div>
+
+        <label for="userSelect">Current User</label>
+        <div class="button-row">
+          <select id="userSelect" class="text-input"></select>
+          <button id="deleteUserButton" type="button" class="danger-button">Remove User</button>
+        </div>
+        <p id="userStatus" class="hint">Create your first user to begin.</p>
+      </div>
+
+      <div class="section">
+        <h2>Personal Information Questionnaire Form</h2>
+        <p class="hint">Fill this PIQ form to generate a fluent self-introduction for practice. You may later put it in the pronunciation analyser to assess your pronunciation score</p>
+        <div class="form-grid">
+          <div>
+            <label for="piqName">Name</label>
+            <input id="piqName" class="text-input" type="text" placeholder="Eg. Alia Bhatt" />
+          </div>
+          <div>
+            <label for="piqAge">Age</label>
+            <input id="piqAge" class="text-input" type="text" placeholder="Eg. 22" />
+          </div>
+          <div>
+            <label for="piqEducation">Education</label>
+            <input id="piqEducation" class="text-input" type="text" placeholder="Eg. BA" />
+          </div>
+          <div>
+            <label for="piqCity">City</label>
+            <input id="piqCity" class="text-input" type="text" placeholder="Eg. Chandigarh" />
+          </div>
+          <div>
+            <label for="piqStrengths">Strengths</label>
+            <input id="piqStrengths" class="text-input" type="text" placeholder="Eg. disciplined, calm under pressure, quick learner" />
+          </div>
+          <div>
+            <label for="piqWeaknesses">Weaknesses</label>
+            <input id="piqWeaknesses" class="text-input" type="text" placeholder="Eg. overthinks details sometimes" />
+          </div>
+          <div>
+            <label for="piqHobbies">Hobbies</label>
+            <input id="piqHobbies" class="text-input" type="text" placeholder="Eg. reading, football, singing" />
+          </div>
+          <div>
+            <label for="piqAchievements">Achievements</label>
+            <input id="piqAchievements" class="text-input" type="text" placeholder="Eg. college debate winner, NCC camp selection" />
+          </div>
+          <div>
+            <label for="piqExperience">Work Experience</label>
+            <input id="piqExperience" class="text-input" type="text" placeholder="Eg. internship at an MNC" />
+          </div>
+          <div>
+            <label for="piqMotivation">Motivation</label>
+            <input id="piqMotivation" class="text-input" type="text" placeholder="Eg. to serve, grow through responsibility, and contribute meaningfully to the nation" />
+          </div>
+        </div>
+
+        <div class="button-row top-gap">
+          <button id="generateIntroButton" type="button">Generate Self-Introduction</button>
+          <button id="copyIntroButton" type="button" class="secondary-button" disabled>Use This In Pronunciation Box</button>
+        </div>
+
+        <label for="generatedIntroduction">Generated Self-Introduction</label>
+        <textarea id="generatedIntroduction" rows="5" placeholder="The generated paragraph will appear here..." readonly></textarea>
+        <p id="generatorStatus" class="hint">This uses a local offline text model running on the server.</p>
+      </div>
+
+      <div class="section">
+        <h2>Recent Practice Texts</h2>
+        <p class="hint">The last 5 reference texts are saved for each user. Click one to reuse it.</p>
+        <div id="recentTextsList" class="recent-texts"></div>
+      </div>
+
+      <label for="referenceText">Reference Paragraph For Pronunciation Practice</label>
+      <textarea id="referenceText" rows="6" placeholder="Type, paste, or generate a paragraph here...">India is my country and I love it.</textarea>
+
+      <div class="section">
+        <h2>Record Audio</h2>
+        <div class="button-row">
+          <button id="startRecordButton">Start Recording</button>
+          <button id="stopRecordButton" disabled>Stop Recording</button>
+        </div>
+        <p id="recordingStatus">Recording status: Not recording</p>
+        <audio id="recordedAudioPlayer" controls class="hidden"></audio>
+      </div>
+
+      <button id="analyzeButton" class="primary">Analyze Pronunciation</button>
+
+      <div class="section">
+        <h2>Progress Graph</h2>
+        <p class="hint">This graph shows saved pronunciation scores for the selected user.</p>
+        <canvas id="progressChart" width="760" height="280"></canvas>
+        <p id="chartStatus" class="hint">No saved practice sessions yet.</p>
+      </div>
+
+      <div id="loadingMessage" class="loading hidden">Analyzing audio... this may take a moment.</div>
+
+      <div id="resultCard" class="result hidden">
+        <h2>Latest Result</h2>
+        <p><strong>Pronunciation Score:</strong> <span id="scoreValue">-</span></p>
+        <p><strong>Transcript:</strong> <span id="transcriptValue">-</span></p>
+
+        <div>
+          <strong>Word Mistakes:</strong>
+          <div id="mistakesList" class="mistakes"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
